@@ -13,14 +13,20 @@ public class Cliente {
 
     private int idCliente;
     private String nomeCliente;
+    private String cpf;
+    private String cnpj;
+    private String endereco;
     private String telefone;
 
     public Cliente() {
     }
 
-    public Cliente(int idCliente, String nomeCliente, String telefone) {
+    public Cliente(int idCliente, String nomeCliente, String cpf, String cnpj, String endereco, String telefone) {
         this.idCliente = idCliente;
         this.nomeCliente = nomeCliente;
+        this.cpf = cpf;
+        this.cnpj = cnpj;
+        this.endereco = endereco;
         this.telefone = telefone;
     }
 
@@ -40,6 +46,30 @@ public class Cliente {
         this.nomeCliente = nomeCliente;
     }
 
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
     public String getTelefone() {
         return telefone;
     }
@@ -50,7 +80,8 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente{" + "idCliente=" + idCliente + ", nomeCliente=" + nomeCliente + ", telefone=" + telefone + '}';
+        return "Cliente{" + "idCliente=" + idCliente + ", nomeCliente=" + nomeCliente + ", cpf=" + cpf + ", cnpj=" + cnpj + ", endereco=" + endereco + ", telefone=" + telefone + '}';
     }
 
+    
 }
