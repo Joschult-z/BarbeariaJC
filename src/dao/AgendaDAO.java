@@ -9,6 +9,7 @@ import conexao.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import model.Agenda;
 
 /**
  *
@@ -35,4 +36,7 @@ public class AgendaDAO {
                     + ex.getMessage());
         }
     }//fim cadastrarAgenda
+
+    
+
 }

@@ -30,9 +30,7 @@ public class ClienteDAO {
             sql = "insert into clientes values (null, ?,?,null,?,?)";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, cVO.getNomeCliente());
-            pst.setString(2, cVO.getCpf());
-            pst.setString(3, cVO.getEndereco());
-            pst.setString(4, cVO.getTelefone());
+            pst.setString(2, cVO.getTelefone());
             pst.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Erro ao cadastrar!\n"
@@ -52,8 +50,6 @@ public class ClienteDAO {
                 //lado do java |x| (lado do banco)
                 c.setIdCliente(rs.getInt("idcliente"));
                 c.setNomeCliente(rs.getString("nome"));
-                c.setCpf(rs.getString("cpf"));
-                c.setEndereco(rs.getString("endereco"));
                 c.setTelefone(rs.getString("telefone"));
                 clientes.add(c);
             }
@@ -64,7 +60,7 @@ public class ClienteDAO {
         return clientes;
     }//fim do listar|
 
-    public Cliente getClienteByDoc(String cpf) {
+    public Cliente getClienteByDoc(String cpf) { //bydoc com erro pq nao tem cpf
         Cliente c = new Cliente();
         try {
             Connection con = Conexao.getConexao();
@@ -76,8 +72,6 @@ public class ClienteDAO {
                 //lado do java |x| (lado do banco)
                 c.setIdCliente(rs.getInt("idcliente"));
                 c.setNomeCliente(rs.getString("nome"));
-                c.setCpf(rs.getString("cpf"));
-                c.setEndereco(rs.getString("endereco"));
                 c.setTelefone(rs.getString("telefone"));
             }
         } catch (SQLException ex) {
@@ -107,9 +101,7 @@ public class ClienteDAO {
                     + "where cpf = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, cVO.getNomeCliente());
-            pst.setString(2, cVO.getEndereco());
-            pst.setString(3, cVO.getTelefone());
-            pst.setString(4, cVO.getCpf());
+            pst.setString(2, cVO.getTelefone());
             pst.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Erro ao atualizar CPF!\n"

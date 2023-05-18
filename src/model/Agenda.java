@@ -6,6 +6,7 @@
 package model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import sun.util.resources.LocaleData;
 
 /**
@@ -16,17 +17,17 @@ public class Agenda {
     
     private int idAgenda;
     private Cliente cliente;
-    private LocalDate Horario;
-    private String telefone;
+    private LocalDateTime Horario;
+    private Barbeiro nomeBarbeiros;
 
     public Agenda() {
     }
 
-    public Agenda(int idAgenda, Cliente cliente, LocalDate Horario, String telefone) {
+    public Agenda(int idAgenda, Cliente cliente, LocalDateTime Horario, Barbeiro nomeBarbeiros) {
         this.idAgenda = idAgenda;
         this.cliente = cliente;
         this.Horario = Horario;
-        this.telefone = telefone;
+        this.nomeBarbeiros = nomeBarbeiros;
     }
 
     public int getIdAgenda() {
@@ -45,28 +46,27 @@ public class Agenda {
         this.cliente = cliente;
     }
 
-    public LocalDate getHorario() {
+    public LocalDateTime getHorario() {
         return Horario;
     }
 
-    public void setHorario(LocalDate Horario) {
+    public void setHorario(LocalDateTime Horario) {
         this.Horario = Horario;
     }
 
-    public String getTelefone() {
-        return telefone;
+    public Barbeiro getNomeBarbeiros() {
+        return nomeBarbeiros;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public void setNomeBarbeiros(Barbeiro nomeBarbeiros) {
+        this.nomeBarbeiros = nomeBarbeiros;
     }
 
     @Override
     public String toString() {
-        return "Agenda{" + "idAgenda=" + idAgenda + ", cliente=" + cliente + ", Horario=" + Horario + ", telefone=" + telefone + '}';
+        return "Agenda{" + "idAgenda=" + idAgenda + ", cliente=" + cliente + ", Horario=" + Horario + ", nomeBarbeiros=" + nomeBarbeiros + '}';
     }
 
-   
     
     
 }
