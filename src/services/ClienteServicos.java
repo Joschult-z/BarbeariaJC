@@ -6,6 +6,7 @@
 package services;
 
 import dao.ClienteDAO;
+import dao.DAOFactory;
 import java.util.ArrayList;
 import model.Cliente;
 
@@ -32,7 +33,7 @@ public class ClienteServicos {
 
     public Cliente buscarClienteByCPF(String cpf) {
         ClienteDAO cDAO = DAOFactory.getClienteDAO();
-        return cDAO.getClienteByDoc(cpf);
+        return cDAO.BuscarClienteCPF(cpf);
     }
 
     public ArrayList<Cliente> getClientes() {

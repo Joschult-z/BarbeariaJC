@@ -60,7 +60,7 @@ public class ClienteDAO {
         return clientes;
     }//fim do listar|
 
-    public Cliente getClienteByDoc(String cpf) { //bydoc com erro pq nao tem cpf
+    public Cliente BuscarClienteCPF(String cpf) { //bydoc com erro pq nao tem cpf
         Cliente c = new Cliente();
         try {
             Connection con = Conexao.getConexao();

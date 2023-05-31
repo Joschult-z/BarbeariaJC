@@ -9,6 +9,8 @@ import conexao.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import model.Agenda;
 
 /**
@@ -16,7 +18,9 @@ import model.Agenda;
  * @author 182120023
  */
 public class AgendaDAO {
-    public void cadastrarAgendaDAO(Agenda cVO) {
+
+    public void registrarAgendamentoDAO(Agenda cVO) {
+        LocalDateTime horario = LocalDateTime.now();
         try {
             //busca conexão com o BD
             Connection con = Conexao.getConexao();
@@ -25,18 +29,16 @@ public class AgendaDAO {
             String sql;
             sql = "insert into agenda values (null, ?,?,?,?,?)";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, cVO.get());
-            pst.setString(2, cVO.getCnpj());
-            pst.setString(3, cVO.getEndereco());
-            pst.setString(4, cVO.getTelefone());
-            pst.setString(5, cVO.getGerente());
+            pst.setString(1, cVO.getCliente().getNomeCliente());
+            pst.setTimestamp(1, Timestamp.valueOf(horario));
             pst.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Erro ao cadastrar!\n"
                     + ex.getMessage());
         }
     }//fim cadastrarAgenda
-
     
-
+    public void atualizarAgendamento(Agendamento agendamento){
+        
+    }
 }
