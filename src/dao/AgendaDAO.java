@@ -8,9 +8,12 @@ package dao;
 import conexao.Conexao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import model.Agenda;
 
 /**
@@ -37,8 +40,23 @@ public class AgendaDAO {
                     + ex.getMessage());
         }
     }//fim cadastrarAgenda
+
+    public void atualizarAgendamento(Agenda agendamento) {
+
+    }//fim AtualizarAgendamento
+
+    public Agenda buscarAgendamento(int Agendamento) {
+        return null;
+
+    }//fim BuscarAgendamento
+
+    public void removerAgendamento(int idAgendamento) {
+       
+    }//fim RemoverAgendamento
     
-    public void atualizarAgendamento(Agendamento agendamento){
+    public List<ArrayList> listarAgendamentos() {
+        return null;
         
-    }
+    }//fim ArrayList 
+
 }

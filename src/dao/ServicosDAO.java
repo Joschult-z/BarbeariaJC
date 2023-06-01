@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import model.Servicos;
 
 /**
@@ -17,7 +19,7 @@ import model.Servicos;
  * @author 182120023
  */
 public class ServicosDAO {
-    
+
     public void adicionarServicoDAO(Servicos sVO) {
         LocalDateTime horario = LocalDateTime.now();
 //busca conecão com o BD
@@ -36,8 +38,8 @@ public class ServicosDAO {
         }
 
     }
-    
-    public void deletarServicoDAO(int idServicos){
+
+    public void deletarServicoDAO(int idServicos) {
         try {
             Connection con = Conexao.getConexao();
             String sql = "delete from servicos where idServicos = ?";
@@ -49,4 +51,14 @@ public class ServicosDAO {
                     + ex.getMessage());
         }
     }
+
+    public void atualizarServico(Servico servico) {
+        // Lógica para atualizar os detalhes do serviço no banco de dados
+    }
+
+    public List<ArrayList> listarServicos() {
+        return null;
+        // Lógica para retornar a lista de todos os serviços do banco de dados
+    }
+    
 }
