@@ -14,14 +14,16 @@ public class Cliente {
     private int idCliente;
     private String nomeCliente;
     private String telefone;
+    private String cpf;
 
     public Cliente() {
     }
 
-    public Cliente(int idCliente, String nomeCliente, String telefone) {
+    public Cliente(int idCliente, String nomeCliente, String telefone, String cpf) {
         this.idCliente = idCliente;
         this.nomeCliente = nomeCliente;
         this.telefone = telefone;
+        this.cpf = cpf;
     }
 
     public int getIdCliente() {
@@ -48,12 +50,17 @@ public class Cliente {
         this.telefone = telefone;
     }
 
-    @Override
-    public String toString() {
-        return "Cliente{" + "idCliente=" + idCliente + ", nomeCliente=" + nomeCliente + ", telefone=" + telefone + '}';
+    public String getCpf() {
+        return cpf;
     }
 
-    
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
 
-    
+    @Override
+    public String toString() {
+        return "Cliente{" + "idCliente=" + idCliente + ", nomeCliente=" + nomeCliente + ", telefone=" + telefone + ", cpf=" + cpf + '}';
+    }
+
 }

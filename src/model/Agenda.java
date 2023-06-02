@@ -14,20 +14,24 @@ import sun.util.resources.LocaleData;
  * @author 182120023
  */
 public class Agenda {
-    
+
     private int idAgenda;
-    private Cliente cliente;
-    private LocalDateTime Horario;
+    private Cliente nomeCliente;
     private Barbeiro nomeBarbeiros;
+    private Servicos nomeServico;
+    private LocalDateTime Horario;
+    private Cliente cpf;
 
     public Agenda() {
     }
 
-    public Agenda(int idAgenda, Cliente cliente, LocalDateTime Horario, Barbeiro nomeBarbeiros) {
+    public Agenda(int idAgenda, Cliente nomeCliente, Barbeiro nomeBarbeiros, Servicos nomeServico, LocalDateTime Horario, Cliente cpf) {
         this.idAgenda = idAgenda;
-        this.cliente = cliente;
-        this.Horario = Horario;
+        this.nomeCliente = nomeCliente;
         this.nomeBarbeiros = nomeBarbeiros;
+        this.nomeServico = nomeServico;
+        this.Horario = Horario;
+        this.cpf = cpf;
     }
 
     public int getIdAgenda() {
@@ -38,20 +42,12 @@ public class Agenda {
         this.idAgenda = idAgenda;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Cliente getNomeCliente() {
+        return nomeCliente;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-
-    public LocalDateTime getHorario() {
-        return Horario;
-    }
-
-    public void setHorario(LocalDateTime Horario) {
-        this.Horario = Horario;
+    public void setNomeCliente(Cliente nomeCliente) {
+        this.nomeCliente = nomeCliente;
     }
 
     public Barbeiro getNomeBarbeiros() {
@@ -62,11 +58,35 @@ public class Agenda {
         this.nomeBarbeiros = nomeBarbeiros;
     }
 
+    public Servicos getNomeServico() {
+        return nomeServico;
+    }
+
+    public void setNomeServico(Servicos nomeServico) {
+        this.nomeServico = nomeServico;
+    }
+
+    public LocalDateTime getHorario() {
+        return Horario;
+    }
+
+    public void setHorario(LocalDateTime Horario) {
+        this.Horario = Horario;
+    }
+
+    public Cliente getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(Cliente cpf) {
+        this.cpf = cpf;
+    }
+
     @Override
     public String toString() {
-        return "Agenda{" + "idAgenda=" + idAgenda + ", cliente=" + cliente + ", Horario=" + Horario + ", nomeBarbeiros=" + nomeBarbeiros + '}';
+        return "Agenda{" + "idAgenda=" + idAgenda + ", nomeCliente=" + nomeCliente + ", nomeBarbeiros=" + nomeBarbeiros + ", nomeServico=" + nomeServico + ", Horario=" + Horario + ", cpf=" + cpf + '}';
     }
 
     
-    
+
 }

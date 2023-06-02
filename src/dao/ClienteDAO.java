@@ -27,38 +27,17 @@ public class ClienteDAO {
             //cria espaço de trabalho SQl, é a área no Java onde
             //vamo executar os scripts SQL
             String sql;
-            sql = "insert into clientes values (null, ?,?,null,?,?)";
+            sql = "insert into clientes values (null, ?,?,?)";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, cVO.getNomeCliente());
             pst.setString(2, cVO.getTelefone());
+            pst.setString(3, cVO.getCpf());
             pst.executeUpdate();
         } catch (SQLException ex) {
-            System.out.println("Erro ao cadastrar!\n"
+            System.out.println("Erro ao cadastrar Cliente!\n"
                     + ex.getMessage());
         }
     }//fim cadastrar|
-
-    public ArrayList<Cliente> getClientesDAO() {
-        ArrayList<Cliente> clientes = new ArrayList<>();
-        try {
-            Connection con = Conexao.getConexao();
-            Statement stat = con.createStatement();
-            String sql = "select * from clientes";
-            ResultSet rs = stat.executeQuery(sql);
-            while (rs.next()) {
-                Cliente c = new Cliente();
-                //lado do java |x| (lado do banco)
-                c.setIdCliente(rs.getInt("idcliente"));
-                c.setNomeCliente(rs.getString("nome"));
-                c.setTelefone(rs.getString("telefone"));
-                clientes.add(c);
-            }
-        } catch (SQLException ex) {
-            System.out.println("Erro ao Listar!\n"
-                    + ex.getMessage());
-        }
-        return clientes;
-    }//fim do listar|
 
     public Cliente BuscarClienteCPF(String cpf) { //bydoc com erro pq nao tem cpf
         Cliente c = new Cliente();
@@ -71,7 +50,7 @@ public class ClienteDAO {
             while (rs.next()) {
                 //lado do java |x| (lado do banco)
                 c.setIdCliente(rs.getInt("idcliente"));
-                c.setNomeCliente(rs.getString("nome"));
+                c.setNomeCliente(rs.getString("nomeCliente"));
                 c.setTelefone(rs.getString("telefone"));
             }
         } catch (SQLException ex) {
@@ -89,7 +68,7 @@ public class ClienteDAO {
             pst.setString(1, cpf);
             pst.executeUpdate();
         } catch (SQLException ex) {
-            System.out.println("Erro ao deletar CPF!\n"
+            System.out.println("Erro ao deletar Cliente!\n"
                     + ex.getMessage());
         }
     }//fim deletarClienteDAO|
@@ -97,16 +76,39 @@ public class ClienteDAO {
     public void atualizaClienteByDoc(Cliente cVO) {
         try {
             Connection con = Conexao.getConexao();
-            String sql = "update clientes set nome = ?, endereco = ?, telefone = ? "
+            String sql = "update clientes set nomeCliente = ?, telefone = ? "
                     + "where cpf = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, cVO.getNomeCliente());
             pst.setString(2, cVO.getTelefone());
             pst.executeUpdate();
         } catch (SQLException ex) {
-            System.out.println("Erro ao atualizar CPF!\n"
+            System.out.println("Erro ao atualizar Cliente!\n"
                     + ex.getMessage());
         }
-    }//fim atualizaClienteByDoc|
+    }//fim atualizaClienteByDoc
+
+    public ArrayList<Cliente> listarClientesDAO() {
+        ArrayList<Cliente> clientes = new ArrayList<>();
+        try {
+            Connection con = Conexao.getConexao();
+            Statement stat = con.createStatement();
+            String sql = "select * from clientes";
+            ResultSet rs = stat.executeQuery(sql);
+            while (rs.next()) {
+                Cliente c = new Cliente();
+                //lado do java |x| (lado do banco)
+                c.setIdCliente(rs.getInt("idcliente"));
+                c.setNomeCliente(rs.getString("nomeCliente"));
+                c.setTelefone(rs.getString("telefone"));
+                c.setCpf(rs.getString("cpf"));
+                clientes.add(c);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Erro ao Listar!\n"
+                    + ex.getMessage());
+        }
+        return clientes;
+    }//fim do listar|
 
 }

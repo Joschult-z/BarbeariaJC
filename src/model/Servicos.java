@@ -10,20 +10,20 @@ package model;
  * @author 182120023
  */
 public class Servicos {
-    
+
     private int idServicos;
+    private String nomeServico;
     private float preco;
     private Cliente nomeCliente;
-    private int quantidade;
 
     public Servicos() {
     }
 
-    public Servicos(int idServicos, float preco, Cliente nomeCliente, int quantidade) {
+    public Servicos(int idServicos, String nomeServico, float preco, Cliente nomeCliente) {
         this.idServicos = idServicos;
+        this.nomeServico = nomeServico;
         this.preco = preco;
         this.nomeCliente = nomeCliente;
-        this.quantidade = quantidade;
     }
 
     public int getIdServicos() {
@@ -32,6 +32,14 @@ public class Servicos {
 
     public void setIdServicos(int idServicos) {
         this.idServicos = idServicos;
+    }
+
+    public String getNomeServico() {
+        return nomeServico;
+    }
+
+    public void setNomeServico(String nomeServico) {
+        this.nomeServico = nomeServico;
     }
 
     public float getPreco() {
@@ -50,18 +58,11 @@ public class Servicos {
         this.nomeCliente = nomeCliente;
     }
 
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
-
     @Override
     public String toString() {
-        return "Servicos{" + "idServicos=" + idServicos + ", preco=" + preco + ", nomeCliente=" + nomeCliente + ", quantidade=" + quantidade + '}';
+        return "Servicos{" + "idServicos=" + idServicos + ", nomeServico=" + nomeServico + ", preco=" + preco + ", nomeCliente=" + nomeCliente + '}';
     }
 
-   
+    
+
 }

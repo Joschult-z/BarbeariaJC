@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import model.Barbeiro;
 
 /**
@@ -77,4 +79,26 @@ public class BarbeiroDAO {
             System.out.println("Erro ao deletar barbeiro!\n" + ex.getMessage());
         }
     }//fim deletarBarbeiro
+    
+    public ArrayList<Barbeiro> getBarbeirosDAO() {
+        ArrayList<Barbeiro> clientes = new ArrayList<>();
+        try {
+            Connection con = Conexao.getConexao();
+            Statement stat = con.createStatement();
+            String sql = "select * from barbeiros";
+            ResultSet rs = stat.executeQuery(sql);
+            while (rs.next()) {
+                Barbeiro c = new Barbeiro();
+                //lado do java |x| (lado do banco)
+                c.setIdBarbeiro(rs.getInt("idcliente"));
+                c.setNomeBarbeiro(rs.getString("nome"));
+                c.setTelefone(rs.getString("telefone"));
+                clientes.add(c);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Erro ao Listar!\n"
+                    + ex.getMessage());
+        }
+        return clientes;
+    }//fim do listar
 }
