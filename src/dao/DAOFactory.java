@@ -27,6 +27,7 @@ public class DAOFactory {
     public static BarbeiroDAO getBarbeiroDAO() {
         return bDAO;
     }
+
     public static ServicosDAO getServicosDAO() {
         return sDAO;
     }

@@ -11,8 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.sql.Time;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import model.Agenda;
@@ -27,8 +27,6 @@ import model.Servicos;
 public class AgendaDAO {
 
     public void registrarAgendamentoDAO(Agenda aVO) {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        Timestamp timestamp = Timestamp.valueOf(aVO.getHorario());
         try {
             //busca conexão com o BD
             Connection con = Conexao.getConexao();
@@ -39,8 +37,9 @@ public class AgendaDAO {
             pst.setString(1, aVO.getNomeCliente().getNomeCliente());
             pst.setString(2, aVO.getNomeBarbeiros().getNomeBarbeiro());
             pst.setString(3, aVO.getNomeServico().getNomeServico());
-            pst.setTimestamp(4, timestamp);//confirmar sexta
-            //java.sql.Date dataVenda = java.sql.Date.valueOf(pVO.getDataVenda());
+            java.sql.Date data = java.sql.Date.valueOf(aVO.getData());
+            pst.setDate(4, data);
+            pst.setTime(5, Time.valueOf(aVO.getHorario()));
             pst.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Erro ao registrar!\n"
@@ -49,19 +48,18 @@ public class AgendaDAO {
     }//fim cadastrarAgenda
 
     public void atualizarAgendamento(Agenda aVO) {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        Timestamp timestamp = Timestamp.valueOf(aVO.getHorario());
         try {
             Connection con = Conexao.getConexao();
-            String sql = "update agenda set nomeCliente = ?, nomeBarbeiro = ?, nomeServico = ?, horario = ?"
-                     + "where cpf = ?";
+            String sql = "update agenda set nomeCliente = ?, nomeBarbeiro = ?, nomeServico = ?, data = ?,horario = ?"
+                    + "where cpf = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, aVO.getNomeCliente().getNomeCliente());
             pst.setString(2, aVO.getNomeBarbeiros().getNomeBarbeiro());
             pst.setString(3, aVO.getNomeServico().getNomeServico());
-            pst.setString(3, aVO.getNomeCliente().getCpf());
-            pst.setTimestamp(4, timestamp);//confirmar sexta
-
+            pst.setString(3, aVO.getNomeCliente().getCpf());// talvez mudar
+            java.sql.Date data = java.sql.Date.valueOf(aVO.getData());
+            pst.setDate(4, data);
+            pst.setTime(6, Time.valueOf(aVO.getHorario()));
             pst.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Erro ao atualizar Serviço!\n"
@@ -70,7 +68,7 @@ public class AgendaDAO {
     }//fim AtualizarAgendamento
 
     public void removerAgendamento(String cpf) {
-try {
+        try {
             Connection con = Conexao.getConexao();
             String sql = "delete from agenda where cpf  = ?";
             PreparedStatement pst = con.prepareStatement(sql);
@@ -83,29 +81,32 @@ try {
     }//fim RemoverAgendamento
 
     public ArrayList<Agenda> listarAgendamentos() {
-         LocalDateTime localDateTime = LocalDateTime.now();
-       ArrayList<Agenda> Agenda = new ArrayList<>();
+
+        ArrayList<Agenda> Agenda = new ArrayList<>();
         try {
             Connection con = Conexao.getConexao();
             Statement stat = con.createStatement();
             String sql = "select * from agenda";
             ResultSet rs = stat.executeQuery(sql);
-            Timestamp timestamp = Timestamp.valueOf(rs.getHorario());
+            java.sql.Date data = java.sql.Date.valueOf(getData());
+            pst.setDate(4, data);
+            pst.setTime(6, Time.valueOf(aVO.getHorario()));
             while (rs.next()) {
-                Agenda c = new Agenda();
+                Agenda a = new Agenda();
                 //lado do java |x| (lado do banco)
-                c.setIdAgenda(rs.getInt("idagenda"));
-                c.setNomeCliente((Cliente) rs.getObject("nomeCliente"));
-                c.setNomeBarbeiros((Barbeiro) rs.getObject("nomeBarbeiro"));
-                c.setNomeServico((Servicos) rs.getObject("nomeServico"));
-                c.setPreco(rs.getFloat("preco"));
-                servicos.add(c);
+                a.setIdAgenda(rs.getInt("idagenda"));
+                a.setNomeCliente((Cliente) rs.getObject("nomeCliente"));
+                a.setNomeBarbeiros((Barbeiro) rs.getObject("nomeBarbeiro"));
+                a.setNomeServico((Servicos) rs.getObject("nomeServico"));
+                a.setPreco((XXXX) rs.getFloat("preco"));// como declarar
+                servicos.add(a);
             }
         } catch (SQLException ex) {
             System.out.println("Erro ao Listar Serviços!\n"
                     + ex.getMessage());
         }
-        return servicos;
+        //return servicos;
+        return null;
 
     }//fim ArrayList 
 

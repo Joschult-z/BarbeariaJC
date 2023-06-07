@@ -6,8 +6,8 @@
 package model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import sun.util.resources.LocaleData;
+import java.time.LocalTime;
+
 
 /**
  *
@@ -19,19 +19,23 @@ public class Agenda {
     private Cliente nomeCliente;
     private Barbeiro nomeBarbeiros;
     private Servicos nomeServico;
-    private LocalDateTime Horario;
+    private LocalTime Horario;
+    private LocalDate data;
     private Cliente cpf;
+    private Servicos preco;
 
     public Agenda() {
     }
 
-    public Agenda(int idAgenda, Cliente nomeCliente, Barbeiro nomeBarbeiros, Servicos nomeServico, LocalDateTime Horario, Cliente cpf) {
+    public Agenda(int idAgenda, Cliente nomeCliente, Barbeiro nomeBarbeiros, Servicos nomeServico, LocalTime Horario, LocalDate data, Cliente cpf, Servicos preco) {
         this.idAgenda = idAgenda;
         this.nomeCliente = nomeCliente;
         this.nomeBarbeiros = nomeBarbeiros;
         this.nomeServico = nomeServico;
         this.Horario = Horario;
+        this.data = data;
         this.cpf = cpf;
+        this.preco = preco;
     }
 
     public int getIdAgenda() {
@@ -66,12 +70,20 @@ public class Agenda {
         this.nomeServico = nomeServico;
     }
 
-    public LocalDateTime getHorario() {
+    public LocalTime getHorario() {
         return Horario;
     }
 
-    public void setHorario(LocalDateTime Horario) {
+    public void setHorario(LocalTime Horario) {
         this.Horario = Horario;
+    }
+
+    public LocalDate getData() {
+        return data;
+    }
+
+    public void setData(LocalDate data) {
+        this.data = data;
     }
 
     public Cliente getCpf() {
@@ -82,11 +94,18 @@ public class Agenda {
         this.cpf = cpf;
     }
 
-    @Override
-    public String toString() {
-        return "Agenda{" + "idAgenda=" + idAgenda + ", nomeCliente=" + nomeCliente + ", nomeBarbeiros=" + nomeBarbeiros + ", nomeServico=" + nomeServico + ", Horario=" + Horario + ", cpf=" + cpf + '}';
+    public Servicos getPreco() {
+        return preco;
     }
 
-    
+    public void setPreco(Servicos preco) {
+        this.preco = preco;
+    }
 
+    @Override
+    public String toString() {
+        return "Agenda{" + "idAgenda=" + idAgenda + ", nomeCliente=" + nomeCliente + ", nomeBarbeiros=" + nomeBarbeiros + ", nomeServico=" + nomeServico + ", Horario=" + Horario + ", data=" + data + ", cpf=" + cpf + ", preco=" + preco + '}';
+    }
+
+   
 }

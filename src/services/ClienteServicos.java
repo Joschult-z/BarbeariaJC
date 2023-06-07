@@ -15,8 +15,8 @@ import model.Cliente;
  * @author 182120023
  */
 public class ClienteServicos {
-    
-     public void cadCliente(Cliente cVO) {
+
+    public void cadCliente(Cliente cVO) {
         ClienteDAO cDAO = DAOFactory.getClienteDAO();
         cDAO.cadastrarClienteDAO(cVO);
     }
@@ -38,9 +38,9 @@ public class ClienteServicos {
 
     public ArrayList<Cliente> getClientes() {
         ClienteDAO cDAO = DAOFactory.getClienteDAO();
-        return cDAO.getClientesDAO();
+        return cDAO.listarClientesDAO();
 
     }
-    
+
     //esta faltando DAOFACTORY.
 }

@@ -20,14 +20,14 @@ import model.Barbeiro;
  */
 public class BarbeiroDAO {
 
-    public void registrarBarbeiro(Barbeiro barbeiro) {
+    public void registrarBarbeiro(Barbeiro bVO) {
         try {
             Connection con = Conexao.getConexao();
-            String sql = "insert into barbeiros (cpf, nome, endereco, telefone) values (?, ?, ?, ?)";
+            String sql = "insert into barbeiros (nome, cpf, telefone) values (?, ?, ?)";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, barbeiro.getNomeBarbeiro());
-            pst.setString(2, barbeiro.getCpf());
-            pst.setString(3, barbeiro.getTelefone());
+            pst.setString(1, bVO.getNomeBarbeiro());
+            pst.setString(2, bVO.getCpf());
+            pst.setString(3, bVO.getTelefone());
             pst.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Erro ao registrar barbeiro!\n" + ex.getMessage());
@@ -80,7 +80,7 @@ public class BarbeiroDAO {
         }
     }//fim deletarBarbeiro
     
-    public ArrayList<Barbeiro> getBarbeirosDAO() {
+    public ArrayList<Barbeiro> listarBarbeirosDAO() {
         ArrayList<Barbeiro> clientes = new ArrayList<>();
         try {
             Connection con = Conexao.getConexao();
