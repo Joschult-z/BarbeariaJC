@@ -57,9 +57,11 @@ public class AgendaDAO {
             pst.setString(2, aVO.getNomeBarbeiros().getNomeBarbeiro());
             pst.setString(3, aVO.getNomeServico().getNomeServico());
             pst.setString(3, aVO.getNomeCliente().getCpf());// talvez mudar
+
             java.sql.Date data = java.sql.Date.valueOf(aVO.getData());
             pst.setDate(4, data);
             pst.setTime(6, Time.valueOf(aVO.getHorario()));
+
             pst.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Erro ao atualizar Serviço!\n"
@@ -67,12 +69,12 @@ public class AgendaDAO {
         }
     }//fim AtualizarAgendamento
 
-    public void removerAgendamento(String cpf) {
+    public void removerAgendamento(int idServicos) {
         try {
             Connection con = Conexao.getConexao();
             String sql = "delete from agenda where cpf  = ?";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, cpf);
+            pst.setInt(1, idServicos);
             pst.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Erro ao deletar o Serviço!\n"
@@ -88,9 +90,6 @@ public class AgendaDAO {
             Statement stat = con.createStatement();
             String sql = "select * from agenda";
             ResultSet rs = stat.executeQuery(sql);
-            java.sql.Date data = java.sql.Date.valueOf(getData());
-            pst.setDate(4, data);
-            pst.setTime(6, Time.valueOf(aVO.getHorario()));
             while (rs.next()) {
                 Agenda a = new Agenda();
                 //lado do java |x| (lado do banco)
@@ -98,8 +97,10 @@ public class AgendaDAO {
                 a.setNomeCliente((Cliente) rs.getObject("nomeCliente"));
                 a.setNomeBarbeiros((Barbeiro) rs.getObject("nomeBarbeiro"));
                 a.setNomeServico((Servicos) rs.getObject("nomeServico"));
-                a.setPreco((XXXX) rs.getFloat("preco"));// como declarar
-                servicos.add(a);
+                a.setPreco(()  rs.getFloat("preco"));// como declarar
+                a.setHorario(rs.getTime("horario").toLocalTime());
+                a.setData(rs.getDate("data").toLocalDate());
+                Agenda.add(a);
             }
         } catch (SQLException ex) {
             System.out.println("Erro ao Listar Serviços!\n"
@@ -109,5 +110,9 @@ public class AgendaDAO {
         return null;
 
     }//fim ArrayList 
+
+    private static class aVO {
+
+    }
 
 }

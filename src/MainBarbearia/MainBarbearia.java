@@ -5,6 +5,8 @@
  */
 package MainBarbearia;
 
+import view.jfMenu;
+
 /**
  *
  * @author 182120023
@@ -17,5 +19,7 @@ public class MainBarbearia {
     public static void main(String[] args) {
         // TODO code application logic here
     }
+     jfMenu jfMenu = new jfMenu();
+        //jfMenu.setVisible(true);
     
 }

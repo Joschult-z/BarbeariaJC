@@ -26,9 +26,9 @@ public class AgendaServicos {
         aDAO.atualizarAgendamento(aVO);
     }
 
-    public void removerAgendamento(String cpf) {
+    public void removerAgendamento(int idServicos) {
         AgendaDAO aDAO = DAOFactory.getAgendaDAO();
-        aDAO.removerAgendamento(cpf);
+        aDAO.removerAgendamento(idServicos);
     }
 
     public ArrayList<Agenda> getAgendaDAO() {
