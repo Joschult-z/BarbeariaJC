@@ -16,7 +16,7 @@ import java.sql.DriverManager;
 public class Conexao {
 
     //cria uma constante com endereço do BD/Schema
-    private static String url = "jdbc:mysql://localhost:3306/livraria";
+    private static String url = "jdbc:mysql://localhost:3306/agenda";
     //cria ums constante um user do BD
     private static String user = "root";
     //cria uma constante com a senha do BD
