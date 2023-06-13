@@ -18,8 +18,8 @@ public class MainBarbearia {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        jfMenu jfMenu = new jfMenu();
+        jfMenu.setVisible(true);
     }
-     jfMenu jfMenu = new jfMenu();
-        //jfMenu.setVisible(true);
-    
+
 }

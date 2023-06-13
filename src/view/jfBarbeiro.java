@@ -5,6 +5,13 @@
  */
 package view;
 
+import Util.Validadores;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Barbeiro;
+import services.BarbeiroServicos;
+import services.ServicosFactory;
+
 /**
  *
  * @author João Schultz
@@ -37,13 +44,17 @@ public class jfBarbeiro extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        jtfNome = new javax.swing.JTextField();
+        jtfCPF = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtBarbeiros = new javax.swing.JTable();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
         jffTelefone = new javax.swing.JFormattedTextField();
+        jbSalvar = new javax.swing.JButton();
+        jbEditar = new javax.swing.JButton();
+        jbDeletar = new javax.swing.JButton();
+        jbLimpar = new javax.swing.JButton();
 
         menu1.setLabel("File");
         menuBar1.add(menu1);
@@ -75,9 +86,20 @@ public class jfBarbeiro extends javax.swing.JPanel {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("REGISTRO BARBEIRO");
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        jtfNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtfNomeKeyTyped(evt);
+            }
+        });
+
+        jtfCPF.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jtfCPFFocusLost(evt);
+            }
+        });
+        jtfCPF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                jtfCPFActionPerformed(evt);
             }
         });
 
@@ -114,13 +136,41 @@ public class jfBarbeiro extends javax.swing.JPanel {
         jLabel6.setText("TABELA DE BARBEIROS REGISTRADOS");
 
         try {
-            jffTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(00 )00000-0000")));
+            jffTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
         jffTelefone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jffTelefoneActionPerformed(evt);
+            }
+        });
+
+        jbSalvar.setText("Salvar");
+        jbSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalvarActionPerformed(evt);
+            }
+        });
+
+        jbEditar.setText("Editar");
+        jbEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEditarActionPerformed(evt);
+            }
+        });
+
+        jbDeletar.setText("Deletar");
+        jbDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbDeletarActionPerformed(evt);
+            }
+        });
+
+        jbLimpar.setText("Limpar");
+        jbLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbLimparActionPerformed(evt);
             }
         });
 
@@ -134,38 +184,41 @@ public class jfBarbeiro extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jffTelefone, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTextField1))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTextField3))))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel4)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(jffTelefone, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel2)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(jtfNome))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addComponent(jLabel3)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(jtfCPF))))
+                                .addGap(37, 37, 37)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jbSalvar)
+                                        .addComponent(jbEditar)
+                                        .addComponent(jbDeletar))
+                                    .addComponent(jbLimpar)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(80, 80, 80)
-                                .addComponent(jLabel1)))
+                                .addGap(125, 125, 125)
+                                .addComponent(jLabel1))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(91, 91, 91)
+                                .addComponent(jLabel6)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 47, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(101, 101, 101))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(45, 45, 45))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,24 +228,28 @@ public class jfBarbeiro extends javax.swing.JPanel {
                 .addGap(52, 52, 52)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel5)
+                    .addComponent(jbLimpar))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(jbSalvar))
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jffTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jffTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbEditar))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jtfCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jbDeletar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addGap(30, 30, 30)
@@ -216,11 +273,156 @@ public class jfBarbeiro extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jffTelefoneActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void jtfCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCPFActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_jtfCPFActionPerformed
+
+    private void jtfCPFFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtfCPFFocusLost
+        // TODO add your handling code here:
+        if (!jtfCPF.getText().equals("")) {
+            if (!Validadores.isCPF(jtfCPF.getText())) {
+                JOptionPane.showMessageDialog(this, "CPF Inválido",
+                        "ERRO CPF", JOptionPane.ERROR_MESSAGE);
+                jtfCPF.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_jtfCPFFocusLost
+
+    private void jtfNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfNomeKeyTyped
+        // TODO add your handling code here:
+        String Letras = "0123456789<>:?/~^}][{´`=+-_!|'\'@#$%¨&*()²³£¢¬§º°ª";
+        if (Letras.contains(evt.getKeyChar() + "")) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jtfNomeKeyTyped
+
+    private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
+        // TODO add your handling code here:
+        jbSalvar.setText("Confirmar");
+        jtfCPF.setEnabled(false);
+        jbLimpar.setText("Limpar");
+        jbDeletar.setVisible(false);
+
+        int linha;
+        linha = jtBarbeiros.getSelectedRow();
+        String Nome = (String) jtBarbeiros.getValueAt(linha, 0);
+        String Telefone = (String) jtBarbeiros.getValueAt(linha, 1);
+        String cpf = (String) jtBarbeiros.getValueAt(linha, 2);
+
+        //carregar dados do form
+        jtfCPF.setText(cpf);
+        jtfNome.setText(Nome);
+        jffTelefone.setText(Telefone);
+        jtfNome.requestFocus();
+    }//GEN-LAST:event_jbEditarActionPerformed
+
+    private void jbLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparActionPerformed
+        // TODO add your handling code here:
+        if (jbLimpar.getText().equals("Limpar")) {
+            limparCampos();
+        } else {
+            limparCampos();
+            jbLimpar.setText("Limpar");
+            jbSalvar.setText("Salvar");
+            jbEditar.setEnabled(false);
+            jtfCPF.setEnabled(true);
+            jbLimpar.setVisible(false);
+        }
 
 
+    }//GEN-LAST:event_jbLimparActionPerformed
+
+    private void jbDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeletarActionPerformed
+        // TODO add your handling code here:
+        int linha;
+        String cpf;
+        linha = jtBarbeiros.getSelectedRow();
+        cpf = (String) jtBarbeiros.getValueAt(linha, 0);
+        BarbeiroServicos barbeiroS = ServicosFactory.getBarbeiroServicos();
+        Barbeiro b = barbeiroS.buscarBarbeiroPorCPF(cpf);
+        Object[] resp = {"Sim", "Não"};
+        int resposta = JOptionPane.showOptionDialog(this,
+                "Deseja realmente deletar este CPF?", "Deletar",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.WARNING_MESSAGE,
+                null, resp, resp[0]);
+        if (resposta == 0) {
+            barbeiroS.deletarBarbeiro(cpf);
+            addRowToTable();
+            JOptionPane.showMessageDialog(this,
+                    "Cliente Deletado com sucesso!");
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Ok então!");
+        }
+
+        jbDeletar.setVisible(false);
+    }//GEN-LAST:event_jbDeletarActionPerformed
+
+    private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
+        // TODO add your handling code here:
+        if (validaImputs()) {
+            //pegar dados da tela para salvar
+            int idBarbeiro = 0;
+            String nomeBarbeiro = jtfNome.getText();
+            String telefone = jffTelefone.getText();
+            String cpf = jtfCPF.getText();
+            BarbeiroServicos barbeiroS = ServicosFactory.getBarbeiroServicos();
+
+            Barbeiro b = new Barbeiro(idBarbeiro, nomeBarbeiro, telefone, cpf);
+            if (jbSalvar.getText().equals("Salvar")) {
+                barbeiroS.registrarBarbeiro(b);
+            } else {
+                barbeiroS.atualizarBarbeiro(b);
+                jbLimpar.doClick();
+            }
+            limparCampos();
+            addRowToTable();
+        }
+
+    }//GEN-LAST:event_jbSalvarActionPerformed
+    public void limparCampos() {
+        jtfNome.setText("");
+        jtfCPF.setText("");
+        jffTelefone.setText("");
+        jtfNome.requestFocus();
+
+    }
+
+    public boolean validaImputs() {
+        if (jtfNome.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Preencher nome!");
+            jtfNome.requestFocus();
+            return false;
+
+        } else if (jffTelefone.getValue().equals("")) {
+            JOptionPane.showMessageDialog(this, "Preencher Telefone!");
+            jffTelefone.requestFocus();
+            return false;
+
+        } else if (jtfCPF.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Preencher CPF!");
+            jtfCPF.requestFocus();
+            return false;
+        }
+            return true;
+
+        }
+    
+    public void addRowToTable() {
+        DefaultTableModel model = (DefaultTableModel) jtBarbeiros.getModel();
+        model.getDataVector().removeAllElements();//remove todas as linhas
+        model.fireTableDataChanged();
+        Object rowData[] = new Object[3];
+        BarbeiroServicos barbeiroS = ServicosFactory.getBarbeiroServicos();
+        for (Barbeiro c : barbeiroS.getBarbeiros()) {
+            rowData[0] = c.getCpf();
+            rowData[1] = c.getNomeBarbeiro();
+            rowData[2] = c.getTelefone();
+            model.addRow(rowData);
+        }
+
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -232,10 +434,14 @@ public class jfBarbeiro extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JButton jbDeletar;
+    private javax.swing.JButton jbEditar;
+    private javax.swing.JButton jbLimpar;
+    private javax.swing.JButton jbSalvar;
     private javax.swing.JFormattedTextField jffTelefone;
     private javax.swing.JTable jtBarbeiros;
+    private javax.swing.JTextField jtfCPF;
+    private javax.swing.JTextField jtfNome;
     private java.awt.Menu menu1;
     private java.awt.Menu menu2;
     private java.awt.MenuBar menuBar1;

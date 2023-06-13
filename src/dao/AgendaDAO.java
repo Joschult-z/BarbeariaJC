@@ -97,7 +97,7 @@ public class AgendaDAO {
                 a.setNomeCliente((Cliente) rs.getObject("nomeCliente"));
                 a.setNomeBarbeiros((Barbeiro) rs.getObject("nomeBarbeiro"));
                 a.setNomeServico((Servicos) rs.getObject("nomeServico"));
-                a.setPreco((float)rs.getFloat("preco"));// como declarar
+                a.setPreco((Servicos) rs.getObject("preco"));// como declararrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
                 a.setHorario(rs.getTime("horario").toLocalTime());
                 a.setData(rs.getDate("data").toLocalDate());
                 Agenda.add(a);

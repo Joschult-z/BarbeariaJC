@@ -5,6 +5,12 @@
  */
 package view;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import model.Servicos;
+import services.ServicosFactory;
+import services.ServicosServicos;
+
 /**
  *
  * @author João Schultz
@@ -29,27 +35,31 @@ public class jfServicos extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel1 = new javax.swing.JLabel();
+        jlTitulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtServicos = new javax.swing.JTable();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel6 = new javax.swing.JLabel();
+        jlTabela = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        jtfNomeServico = new javax.swing.JTextField();
+        jtfValorServico = new javax.swing.JTextField();
+        jlRegistro = new javax.swing.JLabel();
+        jbSalvar = new javax.swing.JButton();
+        jbEditar = new javax.swing.JButton();
+        jbDeletar = new javax.swing.JButton();
+        jbLimpar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
 
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Sitka Subheading", 3, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("BELO BARBER STUDIO");
+        jlTitulo.setBackground(new java.awt.Color(255, 255, 255));
+        jlTitulo.setFont(new java.awt.Font("Sitka Subheading", 3, 24)); // NOI18N
+        jlTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        jlTitulo.setText("BELO BARBER STUDIO");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtServicos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -57,7 +67,7 @@ public class jfServicos extends javax.swing.JFrame {
                 {null, null}
             },
             new String [] {
-                "Nome Serviço", "Valor"
+                "NomeServiço", "Valor"
             }
         ) {
             Class[] types = new Class [] {
@@ -75,11 +85,11 @@ public class jfServicos extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtServicos);
 
-        jLabel6.setFont(new java.awt.Font("Sitka Subheading", 3, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("TABELA DE SERVIÇOS REGISTRADOS");
+        jlTabela.setFont(new java.awt.Font("Sitka Subheading", 3, 18)); // NOI18N
+        jlTabela.setForeground(new java.awt.Color(255, 255, 255));
+        jlTabela.setText("TABELA DE SERVIÇOS REGISTRADOS");
 
         jLabel2.setFont(new java.awt.Font("Sitka Subheading", 3, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -89,13 +99,43 @@ public class jfServicos extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("NOME DO SERVIÇO:");
 
-        jTextField1.setText("jTextField1");
+        jtfValorServico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfValorServicoActionPerformed(evt);
+            }
+        });
 
-        jTextField2.setText("jTextField2");
+        jlRegistro.setFont(new java.awt.Font("Sitka Subheading", 3, 18)); // NOI18N
+        jlRegistro.setForeground(new java.awt.Color(255, 255, 255));
+        jlRegistro.setText("REGISTRO DE SERVIÇO");
 
-        jLabel5.setFont(new java.awt.Font("Sitka Subheading", 3, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("REGISTRO DE SERVIÇO");
+        jbSalvar.setText("Salvar");
+        jbSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalvarActionPerformed(evt);
+            }
+        });
+
+        jbEditar.setText("Editar");
+        jbEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEditarActionPerformed(evt);
+            }
+        });
+
+        jbDeletar.setText("Deletar");
+        jbDeletar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbDeletarActionPerformed(evt);
+            }
+        });
+
+        jbLimpar.setText("Limpar");
+        jbLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbLimparActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -105,59 +145,76 @@ public class jfServicos extends javax.swing.JFrame {
             .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(117, 117, 117)
-                                .addComponent(jLabel1))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(95, 95, 95)
-                                .addComponent(jLabel6))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel2)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jtfValorServico, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                        .addComponent(jtfNomeServico, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(56, 56, 56)
+                                .addComponent(jbSalvar)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbEditar)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbDeletar)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbLimpar)))
+                        .addGap(0, 39, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(143, 143, 143)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jlTitulo)
+                        .addGap(89, 89, 89))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jlRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(111, 111, 111))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jlTabela)
+                        .addGap(61, 61, 61))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(jlTitulo)
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(jlRegistro)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfNomeServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfValorServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(27, 27, 27)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel6)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbSalvar)
+                    .addComponent(jbEditar)
+                    .addComponent(jbDeletar)
+                    .addComponent(jbLimpar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jlTabela)
+                .addGap(24, 24, 24)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -169,12 +226,86 @@ public class jfServicos extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jtfValorServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfValorServicoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfValorServicoActionPerformed
+
+    private void jbEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarActionPerformed
+        // TODO add your handling code here:
+        jbSalvar.setText("Confirmar");
+        jbLimpar.setText("Limpar");
+        jbDeletar.setVisible(false);
+
+        int linha;
+        linha = jtServicos.getSelectedRow();
+        String NomeServiço = (String) jtServicos.getValueAt(linha, 0);
+        String Valor = (String) jtServicos.getValueAt(linha, 1);
+
+        //carregar dados do form
+        jtfNomeServico.setText(NomeServiço);
+        jtfValorServico.setText(Valor);
+        jtfNomeServico.requestFocus();
+    }//GEN-LAST:event_jbEditarActionPerformed
+
+    private void jbLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbLimparActionPerformed
+
+    private void jbSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarActionPerformed
+        // TODO add your handling code here:
+        if (validaImputs()) {
+            //pegar dados da tela para salvar
+            int idServicos = 0;
+            String nomeServico = jtfNomeServico.getText();
+            String valorServico = jtfValorServico.getText();
+            ServicosServicos ServicosS = ServicosFactory.getServicosServicos();
+
+            Servicos s = new Servicos(idServicos, nomeServico, valorServico);//XXXXXXXXXXXXXXXXXXXX
+            if (jbSalvar.getText().equals("Salvar")) {
+                ServicosS.adicionarServicoDAO(s);
+            } else {
+                ServicosS.atualizarServico(s);
+                jbLimpar.doClick();
+            }
+            limparCampos();
+            addRowToTable();
+        }
+    }//GEN-LAST:event_jbSalvarActionPerformed
+
+    private void jbDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeletarActionPerformed
+        // TODO add your handling code here:
+        int linha;
+        int idServico;
+        linha = jtServicos.getSelectedRow();
+        idServico = (int) jtServicos.getValueAt(linha, 0);
+        ServicosServicos ServicosS = ServicosFactory.getServicosServicos();
+        Servicos s = ServicosS.deletarServicos(idServico);//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+        Object[] resp = {"Sim", "Não"};
+        int resposta = JOptionPane.showOptionDialog(this,
+                "Deseja realmente deletar este CPF?", "Deletar",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.WARNING_MESSAGE,
+                null, resp, resp[0]);
+        if (resposta == 0) {
+            ServicosS.deletarServicos(idServico);
+            addRowToTable();
+            JOptionPane.showMessageDialog(this,
+                    "Cliente Deletado com sucesso!");
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Ok então!");
+        }
+
+        jbDeletar.setVisible(false);
+    }//GEN-LAST:event_jbDeletarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -211,18 +342,59 @@ public class jfServicos extends javax.swing.JFrame {
         });
     }
 
+    public void limparCampos() {
+        jtfNomeServico.setText("");
+        jtfValorServico.setText("");
+        jtfNomeServico.requestFocus();
+
+    }
+
+    public void addRowToTable() {
+        DefaultTableModel model = (DefaultTableModel) jtServicos.getModel();
+        model.getDataVector().removeAllElements();//remove todas as linhas
+        model.fireTableDataChanged();
+        Object rowData[] = new Object[2];
+        ServicosServicos servicosS = ServicosFactory.getServicosServicos();
+        for (Servicos s : servicosS.getServicos()) {
+            rowData[0] = s.getNomeCliente();
+            rowData[1] = s.getNomeServico();
+            model.addRow(rowData);
+        }
+
+    }
+
+    public boolean validaImputs() {
+        if (jtfNomeServico.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Preencher nome!");
+            jtfNomeServico.requestFocus();
+            return false;
+
+        } else if (jtfValorServico.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Preencher Valor!");
+            jtfValorServico.requestFocus();
+            return false;
+
+        }
+        return true;
+
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JButton jbDeletar;
+    private javax.swing.JButton jbEditar;
+    private javax.swing.JButton jbLimpar;
+    private javax.swing.JButton jbSalvar;
+    private javax.swing.JLabel jlRegistro;
+    private javax.swing.JLabel jlTabela;
+    private javax.swing.JLabel jlTitulo;
+    private javax.swing.JTable jtServicos;
+    private javax.swing.JTextField jtfNomeServico;
+    private javax.swing.JTextField jtfValorServico;
     // End of variables declaration//GEN-END:variables
 }
